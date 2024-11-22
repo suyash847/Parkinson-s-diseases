@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Section - Parkinson's Web App</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Swiper CSS for animation -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <style>
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Gradient background with subtle animation */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #ffafbd, #ffc3a0, #667eea, #764ba2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite; /* Infinite background animation */
+            color: #333;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .contact-form, .survey-section, .review-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Hover effect for form sections */
+        .contact-form:hover, .survey-section:hover, .review-section:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 1); /* Lighter background on hover */
+        }
+
+        .contact-form input, .contact-form textarea, .contact-form select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, background-color 0.3s ease; /* Transition for background color */
+        }
+
+        /* Hover effect when focused */
+        .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+            border-color: #667eea;
+            box-shadow: 0px 0px 10px rgba(102, 126, 234, 0.5);
+            outline: none;
+            background-color: rgba(102, 126, 234, 0.1); /* Light blue background on focus */
+        }
+
+        .contact-form button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #4cae4c;
+        }
+
+        /* Improved Survey Section */
+        .survey-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Hover effect for survey section */
+        .survey-section:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 1); /* Lighter background on hover */
+        }
+
+        .survey-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .survey-section p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .survey-section textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            resize: none;
+            box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, background-color 0.3s ease; /* Transition for background color */
+        }
+
+        .survey-section textarea:focus {
+            border-color: #667eea;
+            box-shadow: 0px 0px 10px rgba(102, 126, 234, 0.5);
+            outline: none;
+            background-color: rgba(102, 126, 234, 0.1); /* Light blue background on focus */
+        }
+
+        /* Improved button style */
+        .survey-section button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .survey-section button:hover {
+            background-color: #4cae4c;
+            transform: translateY(-2px);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Review Section */
+        .review-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .review {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Hover effect for Review */
+        .review:hover {
+            transform: scale(1.02);
+            background-color: rgba(255, 255, 255, 1); /* Lighter background on hover */
+        }
+
+        .review h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .review p {
+            margin: 5px 0 0;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        /* Contact Details Section */
+        .contact-details {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* Chatbot button style */
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Contact Form Section -->
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+            <p>Please fill out the form below for any inquiries.</p>
+            <form action="/submit-contact" method="post">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="tel" name="mobile" placeholder="Your Mobile Number" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                
+                <textarea name="description" placeholder="Short Description"></textarea>
+
+                <!-- Question 1: Tremors -->
+                <p>1. Do you experience tremors?</p>
+                <select name="tremors" required>
+                    <option value="">Select an answer</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+
+                <!-- Question 2: Walking Difficulty -->
+                <p>2. Do you have difficulty while walking?</p>
+                <select name="walking_difficulty" required>
+                    <option value="">Select an answer</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Survey Section -->
+        <div class="survey-section">
+            <h2>Survey for Patients</h2>
+            <p>Your feedback is essential to us. Please provide your input below:</p>
+            <textarea rows="4" placeholder="Your comments..."></textarea>
+            <button>Submit Feedback</button>
+        </div>
+
+        <!-- Review Section -->
+        <div class="review-section">
+            <h2>Patient Reviews</h2>
+            <div class="review">
+                <h3>Yash Kumar Tripathi</h3>
+                <p>Great experience with the treatment! Highly recommend!</p>
+            </div>
+            <div class="review">
+                <h3>Suraj Gupta</h3>
+                <p>The staff was very supportive and understanding.</p>
+            </div>
+            <div class="review">
+                <h3>Divya Gupta </h3>
+                <p>Had a positive experience; the treatment has improved my condition!</p>
+            </div>
+        </div>
+
+        <!-- Contact Details Section -->
+        <div class="contact-details">
+            <h3>Contact Us:</h3>
+            <p>Email: Bitlords@parkinsons.com</p>
+            <p>Phone: +91-7355095958</p>
+            <p>Address: 123 Parkinson's Rd, Health City-(NCR), India </p>
+        </div>
+    </div>
+
+    <!-- Chatbot Button -->
+    <button class="chatbot" onclick="openChatbot()">💬</button>
+
+    <!-- Swiper JS for animations -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        function openChatbot() {
+            alert("Chatbot feature coming soon!");
+        }
+    </script>
+</body>
+</html>

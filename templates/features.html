@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinson's Disease Awareness</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #00C9FF;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007ea7;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #00a9e0;
+        }
+
+        /* Feature Section */
+        .feature-section {
+            background: linear-gradient(135deg, #00C9FF, #92FE9D);
+            padding: 60px 20px;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .feature-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .feature-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card h2 {
+            font-size: 3rem;
+            margin: 0;
+            color: #fffa65;
+        }
+
+        .stat-card p {
+            font-size: 1.1rem;
+            margin: 10px 0 0;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 40px 20px;
+        }
+
+        .timeline {
+            margin: 40px auto;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .timeline-item {
+            padding: 20px;
+            background-color: #f3f3f3;
+            margin-bottom: 20px;
+            border-left: 5px solid #00C9FF;
+        }
+
+        .timeline-item h3 {
+            margin-top: 0;
+            color: #00C9FF;
+        }
+
+        /* Accordion Section */
+        .accordion-item {
+            background-color: #f9f9f9;
+            margin: 5px 0;
+        }
+
+        .accordion-btn {
+            background-color: #00C9FF;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            border: none;
+            text-align: left;
+            outline: none;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            background-color: #00C9FF;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .testimonial {
+            margin: 20px 0;
+        }
+
+        .testimonial h3 {
+            margin-top: 10px;
+            font-weight: normal;
+            color: #fffa65;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background-color: #feb47b;
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .newsletter-section input {
+            padding: 10px;
+            width: 250px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .newsletter-section button {
+            padding: 10px 20px;
+            background-color: #00C9FF;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .stat-card {
+                width: 100%;
+            }
+
+            .feature-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feature-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="doctor.html">Doctor Consultation</a></li>
+            <li><a href="https://www.who.int/news-room/fact-sheets/detail/parkinson-disease">About</a></li>
+            <li><a href="home.html">Parkinson's Disease</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <section class="feature-section">
+        <div class="container">
+            <h1 class="feature-title">Parkinson's Disease: Facts and Survival Rates</h1>
+            <div class="feature-content">
+                <div class="stat-card" id="stat1">
+                    <h2>1 Million+</h2>
+                    <p>People in the US are living with Parkinson's Disease.</p>
+                </div>
+                <div class="stat-card" id="stat2">
+                    <h2>60,000</h2>
+                    <p>New cases are diagnosed annually in the US.</p>
+                </div>
+                <div class="stat-card" id="stat3">
+                    <h2>90%</h2>
+                    <p>Survival rate over 10 years after diagnosis.</p>
+                </div>
+            </div>
+            <div class="description">
+                <p>Parkinson's disease is a neurodegenerative disorder that primarily affects movement control. It is caused by the loss of dopamine-producing neurons in the brain. Symptoms include tremors, stiffness, slowness of movement, and balance issues. While there is no cure, early treatment and lifestyle adjustments can improve the quality of life. Research is ongoing to find better treatments and eventually a cure.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section">
+        <h2>Survival Rates over 10 Years</h2>
+        <div class="chart-container">
+            <canvas id="survivalChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Symptom Timeline Section -->
+    <section class="timeline-section">
+        <h2>Parkinson's Disease Symptom Progression</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Stage 1 - Early Symptoms</h3>
+                <p>Mild tremors , subtle movement changes, and minor balance issues.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Stage 2 - Moderate Symptoms</h3>
+                <p>Tremors become more noticeable, along with stiffness and slowness of movement.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Stage 3 - Advanced Symptoms</h3>
+                <p>Loss of balance, frequent falls, and difficulty with daily activities.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Stage 4 - Severe Symptoms</h3>
+                <p>Assistance needed for most activities, and movement is severely limited.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatment & Therapy Section -->
+    <section class="treatment-section">
+        <h2>Treatments & Therapies</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-btn">Medications</button>
+                <div class="panel">
+                    <p>Medications like Levodopa and Dopamine Agonists can help manage symptoms.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-btn">Physical Therapy</button>
+                <div class="panel">
+                    <p>Physical therapy helps patients maintain mobility and flexibility.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-btn">Surgical Options</button>
+                <div class="panel">
+                    <p>Deep brain stimulation (DBS) is an option for advanced cases of Parkinson’s disease.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <h2>Patient Testimonials</h2>
+        <div class="testimonial">
+            <p> Living with Parkinson's is challenging, but the support and treatment options have made a huge difference in my life. </p>
+            <h3>- Suyash Tripathi</h3>
+        </div>
+        <div class="testimonial">
+            <p> I didn't know what to expect after my diagnosis, but the resources available have helped me manage the symptoms. </p>
+            <h3>- Jane Smith</h3>
+        </div>
+    </section>
+
+    <!-- Newsletter Sign-Up Form -->
+    <section class="newsletter-section">
+        <h2>Stay Updated</h2>
+        <form action="#" method="POST">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <script>
+        // Chart.js Example
+        const ctx = document.getElementById('survivalChart').getContext('2d');
+        const survivalChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 3', 'Year 5', 'Year 7', 'Year 10'],
+                datasets: [{
+                    label: 'Survival Rate (%)',
+                    data: [95, 90, 85, 80, 75],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Accordion Functionality
+        const accordions = document.querySelectorAll(".accordion-btn");
+        accordions.forEach((accordion) => {
+            accordion.addEventListener("click", function () {
+                this.classList.toggle("active");
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

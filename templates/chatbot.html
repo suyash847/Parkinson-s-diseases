@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinson's Disease Chatbot</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Body and Background */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #FF6F61, #6F5B7F, #88CFF8, #F9D62E, #F45B69);
+            background-size: 300% 300%;
+            animation: gradientAnimation 12s ease infinite;
+            color: white;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Container for questions */
+        .question-container {
+            max-width: 500px; /* Wider width */
+            margin: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 80px; /* Adjust as needed */
+            left: 20px;
+            z-index: 1000; /* Ensure it appears above other content */
+        }
+
+        /* Question styles */
+        .question {
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            transition: background-color 0.3s;
+        }
+
+        .question:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Answer styles */
+        .answer {
+            display: none; /* Initially hidden */
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        /* Chatbot Container */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            max-width: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: none; /* Initially hidden */
+            z-index: 1000;
+        }
+
+        /* Chatbot Header */
+        .chatbot-header {
+            background: #FF6F61;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* User Messages */
+        .user-message {
+            background: #6F5B7F;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            align-self: flex-end;
+            max-width: 80%;
+        }
+
+        /* Bot Messages */
+        .bot-message {
+            background: #88CFF8;
+            color: black;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            align-self: flex-start;
+            max-width: 80%;
+        }
+
+        /* Input Area */
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background: white;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .input-area button {
+            background: #FF6F61;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .input-area button:hover {
+            background: #FF4A3A;
+        }
+
+        /* Floating Chatbot Button */
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #FF6F61;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chatbot-container {
+                width: 100%;
+                max-width: 90%;
+            }
+
+            .question-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Parkinson's Disease Chatbot</h1>
+        <!-- Add your main content here -->
+    </div>
+
+    <!-- Reference Questions Section -->
+    <div class="question-container">
+        <h2>Ask Your Queries</h2>
+        <div class="question" onclick="toggleAnswer(this)">What are the symptoms of Parkinson's Disease?</div>
+        <div class="answer">Common symptoms include tremors, stiffness, slow movement, and difficulty with balance.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">What is the survival rate for Parkinson's Disease?</div>
+        <div class="answer">Approximately 80% of individuals with Parkinson's disease survive for more than 10 years after diagnosis.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">What are the treatment options for Parkinson's Disease?</div>
+        <div class="answer">Treatments include medication like Levodopa, physical therapy, and sometimes surgery such as deep brain stimulation (DBS).</div>
+
+        <div class="question" onclick="toggleAnswer(this)">How does Parkinson's disease affect daily life?</div>
+        <div class="answer">Parkinson's disease can affect daily life by making simple tasks like walking, talking, and eating more difficult.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">Which exercises are recommended for Parkinson's Disease?</div>
+        <div class="answer">Exercises like walking, swimming, and tai chi can help improve balance and mobility. Consult a physical therapist for a personalized exercise plan.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">What precautions should a person with Parkinson's take?</div>
+        <div class="answer">Precautions include avoiding falls, staying physically active, managing stress, and regularly consulting with your doctor.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">Is Parkinson's disease hereditary?</div>
+        <div class="answer">While most cases of Parkinson's are not hereditary, there is a genetic component in about 10-15% of cases.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">Can Parkinson's disease cause cognitive decline?</div>
+        <div class="answer">Yes, Parkinson's disease can cause cognitive decline in some individuals, especially as the disease progresses.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">What is deep brain stimulation (DBS)?</div>
+        <div class="answer">Deep brain stimulation (DBS) is a surgical treatment that involves implanting electrodes in the brain to reduce motor symptoms like tremors.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">How can Parkinson's disease impact mental health?</div>
+        <div class="answer">Parkinson's can impact mental health by causing depression, anxiety, and sometimes apathy. Psychological support is important.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">What is the role of diet in managing Parkinson's disease?</div>
+        <div class="answer">A healthy diet rich in fruits, vegetables, whole grains, and omega-3 fatty acids can help manage Parkinson's symptoms. Avoid processed foods and high sugar.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">Can speech therapy help with Parkinson's disease?</div>
+        <div class="answer">Yes, speech therapy can help improve communication for people with Parkinson's who experience speech difficulties.</div>
+
+        <div class="question" onclick="toggleAnswer(this)">What are the early signs of Parkinson's disease?</div>
+        <div class="answer">Early signs of Parkinson's may include a slight tremor, changes in handwriting, loss of smell, and stiffness.</div>
+    </div>
+
+    <!-- Chatbot Button -->
+    <button class="chatbot-button" onclick="toggleChatbot()">💬</button>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">Chat with Us!</div>
+        <div class="chat-area" id="chatArea"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle chatbot visibility
+        function toggleChatbot() {
+            const chatbotContainer = document.getElementById('chatbotContainer');
+            chatbotContainer.style.display = chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '' ? 'block' : 'none';
+        }
+
+        // Toggle answer visibility
+        function toggleAnswer(questionElement) {
+            const answerElement = questionElement.nextElementSibling;
+            answerElement.style.display = answerElement.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Send message function
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const chatArea = document.getElementById('chatArea');
+
+            const userMessage = userInput.value.trim();
+            if (userMessage) {
+                // Display user message
+                chatArea.innerHTML += `<div class="user-message">${userMessage}</div>`;
+                userInput.value = '';
+
+                // Generate bot response
+                generateResponse(userMessage);
+                chatArea.scrollTop = chatArea.scrollHeight; // Scroll to the bottom
+            }
+        }
+
+        // Expanded AI response generation
+        function generateResponse(userMessage) {
+            let botMessage = "";
+
+            // Expanded AI Logic
+            if (userMessage.toLowerCase().includes('symptoms')) {
+                botMessage = "Common symptoms include tremors, stiffness, slow movement, and difficulty with balance.";
+            } else if (userMessage.toLowerCase().includes('survival rate')) {
+                botMessage = "Approximately 80% of individuals with Parkinson's disease survive for more than 10 years after diagnosis.";
+            } else if (userMessage.toLowerCase().includes('treatment')) {
+                botMessage = "Treatments include medication like Levodopa, physical therapy, and sometimes surgery such as deep brain stimulation (DBS). Always consult with a healthcare professional.";
+            } else if (userMessage.toLowerCase().includes('daily life')) {
+                botMessage = "Parkinson's disease can affect daily life by making simple tasks like walking, talking, and eating more difficult.";
+            } else if (userMessage.toLowerCase().includes('exercise')) {
+                botMessage = "Exercises like walking, swimming, and tai chi can help improve balance and mobility. Consult a physical therapist for a personalized exercise plan.";
+            } else if (userMessage.toLowerCase().includes('precaution')) {
+                botMessage = "Precautions include avoiding falls, staying physically active, managing stress, and regularly consulting with your doctor.";
+            } else if (userMessage.toLowerCase().includes('hereditary')) {
+                botMessage = "While most cases of Parkinson's are not hereditary, there is a genetic component in about 10-15% of cases.";
+            } else if (userMessage.toLowerCase().includes('cognitive decline')) {
+                botMessage = "Yes, Parkinson's disease can cause cognitive decline in some individuals, especially as the disease progresses.";
+            } else if (userMessage.toLowerCase().includes('dbs')) {
+                botMessage = "Deep brain stimulation (DBS) is a surgical treatment that involves implanting electrodes in the brain to reduce motor symptoms like tremors.";
+            } else if (userMessage.toLowerCase().includes('mental health')) {
+                botMessage = "Parkinson's can impact mental health by causing depression, anxiety, and sometimes apathy. Psychological support is important.";
+            } else if (userMessage.toLowerCase().includes('diet')) {
+                botMessage = "A healthy diet rich in fruits, vegetables, whole grains, and omega-3 fatty acids can help manage Parkinson's symptoms. Avoid processed foods and high sugar.";
+            } else if (userMessage.toLowerCase().includes('speech therapy')) {
+                botMessage = "Yes, speech therapy can help improve communication for people with Parkinson's who experience speech difficulties.";
+            } else if (userMessage.toLowerCase().includes('early signs')) {
+                botMessage = "Early signs of Parkinson's may include a slight tremor, changes in handwriting, loss of smell, and stiffness.";
+            } else {
+                botMessage = "I'm here to help! Please ask me about symptoms, treatment options, or anything else related to Parkinson's disease.";
+            }
+
+            // Display bot message
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML += `<div class="bot-message">${botMessage}</div>`;
+            chatArea.scrollTop = chatArea.scrollHeight; // Scroll to the bottom
+        }
+    </script>
+</body>
+</html>

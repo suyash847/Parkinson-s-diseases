@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recorder for Patients</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            animation: gradient 5s ease infinite;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .recorder {
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #2193b0;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:disabled {
+            background-color: #999;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #6dd5ed;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-storage.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Voice Recorder for Patients</h1>
+        <div class="recorder">
+            <button id="recordBtn">🎤 Record</button>
+            <button id="stopBtn" disabled>⏹️ Stop</button>
+            <audio id="audioPlayback" controls></audio>
+        </div>
+        <button id="sendBtn" disabled>📤 Send to Doctor</button>
+    </div>
+
+    <script>
+        // Firebase Configuration (replace with your Firebase project configuration)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+
+        const recordBtn = document.getElementById('recordBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const sendBtn = document.getElementById('sendBtn');
+        const audioPlayback = document.getElementById('audioPlayback');
+
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+
+        recordBtn.addEventListener('click', async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.start();
+            recordBtn.disabled = true;
+            stopBtn.disabled = false;
+
+            mediaRecorder.addEventListener('dataavailable', event => {
+                audioChunks.push(event.data);
+            });
+
+            mediaRecorder.addEventListener('stop', () => {
+                audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                audioPlayback.src = audioUrl;
+                sendBtn.disabled = false;
+
+                // Clear audio chunks for the next recording
+                audioChunks = [];
+            });
+        });
+
+        stopBtn.addEventListener('click', () => {
+            mediaRecorder.stop();
+            recordBtn.disabled = false;
+            stopBtn.disabled = true;
+        });
+
+        sendBtn.addEventListener('click', () => {
+            // Create a reference to Firebase Storage
+            const storageRef = storage.ref(`recordings/${Date.now()}.wav`);
+            const uploadTask = storageRef.put(audioBlob);
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    // Optional: Progress indicator
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                }, 
+                (error) => {
+                    console.error('Upload failed:', error);
+                }, 
+                () => {
+                    // When the upload is complete
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                        alert('Audio file successfully uploaded and available at: ' + downloadURL);
+                    });
+                }
+            );
+        });
+    </script>
+</body>
+</html>

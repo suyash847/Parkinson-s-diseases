@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkinson's Disease Doctor Appointment</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      /* Fluid gradient background animation */
+      background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eae4);
+      background-size: 800% 800%;
+      animation: gradientBG 10s ease infinite;
+    }
+
+    /* Animation for fluid gradient background */
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #00796b;
+      padding: 15px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #004d40;
+      border-radius: 5px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Hover and zoom effect on container */
+    .container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Left section (Image) */
+    .doctor-image {
+      flex-basis: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .doctor-image img {
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+      border-radius: 10px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    /* Hover and zoom effect on image */
+    .doctor-image img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Right section (Content) */
+    .content {
+      flex-basis: 50%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      color: #00796b;
+      font-size: 2rem;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      color: #00796b;
+    }
+
+    .doctor-info h2 {
+      font-size: 1.8rem;
+      color: #00796b;
+      margin-bottom: 10px;
+    }
+
+    .doctor-info p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    form label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form button {
+      padding: 15px;
+      width: 100%;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #004d40;
+    }
+
+    #confirmation-message {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .doctor-image, .content {
+        flex-basis: 100%;
+      }
+
+      .doctor-image img {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="chatbot.html">Chatbot</a></li>
+      <li><a href="statistics.html">FAQ</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Left Section (Doctor Image) -->
+    <div class="doctor-image">
+      <img src="doc.webp" alt="Doctor Image">
+    </div>
+
+    <!-- Right Section (Content) -->
+    <div class="content">
+      <header class="header">
+        <h1>Parkinson's Disease Doctor Consultation</h1>
+        <p>Book an appointment for only ₹99</p>
+      </header>
+
+      <!-- Doctor Info and Appointment Form -->
+      <section class="doctor-info">
+        <h2>Dr. Suraj Gupta</h2>
+        <p>Specialist in Neurology and Parkinson's Disease</p>
+        
+        <h3>Book an Appointment</h3>
+        <form id="appointment-form">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+
+          <label for="email">Your Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+
+          <label for="date">Preferred Appointment Date</label>
+          <input type="date" id="date" required>
+
+          <button type="submit">Book Now for ₹99</button>
+        </form>
+      </section>
+
+      <!-- Confirmation Message -->
+      <section id="confirmation-message" class="hidden">
+        <h3>Thank you for booking your appointment!</h3>
+        <p>We will contact you shortly with more details.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const form = document.getElementById('appointment-form');
+    const confirmationMessage = document.getElementById('confirmation-message');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Display confirmation message
+      confirmationMessage.classList.remove('hidden');
+      
+      // Hide the form after booking
+      form.classList.add('hidden');
+    });
+  </script>
+
+</body>
+</html>

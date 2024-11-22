@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinson's Disease - Charts with Floating Background</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Full-color floating background effect */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd, #c2e9fb, #667eea, #764ba2, #89f7fe, #66a6ff);
+            background-size: 300% 300%;
+            animation: floatingColors 12s ease infinite;
+            color: white;
+        }
+
+        @keyframes floatingColors {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Section styles */
+        .chart-section {
+            width: 100%;
+            padding: 50px 0;
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark translucent background */
+        }
+
+        .chart-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .chart-box {
+            width: 400px;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chart-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Chart Description */
+        .chart-description {
+            font-size: 1rem;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .chart-box {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Static Chart Section -->
+    <section class="chart-section">
+        <h2>Parkinson's Disease Data Overview</h2>
+
+        <!-- Chart Container -->
+        <div class="chart-container">
+
+            <!-- Pie Chart -->
+            <div class="chart-box">
+                <h3>Age Distribution</h3>
+                <canvas id="pieChart"></canvas>
+                <p class="chart-description">
+                    This pie chart represents the age distribution of patients diagnosed with Parkinson's disease. 
+                    A significant proportion of cases occur in the 60-80 age group, but younger individuals can also be affected.
+                </p>
+            </div>
+
+            <!-- Radial Chart -->
+            <div class="chart-box">
+                <h3>Symptom Severity</h3>
+                <canvas id="radialChart"></canvas>
+                <p class="chart-description">
+                    The radial chart illustrates the severity of key Parkinson's symptoms. Tremors and slowness of movement are commonly reported 
+                    as more severe, followed by rigidity and balance issues.
+                </p>
+            </div>
+
+            <!-- Bar Chart -->
+            <div class="chart-box">
+                <h3>Treatment Effectiveness</h3>
+                <canvas id="barChart"></canvas>
+                <p class="chart-description">
+                    The bar chart shows the effectiveness of different treatments in managing Parkinson's disease symptoms. 
+                    Medication tends to be the most effective, followed by exercise and therapy.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Chart.js Script -->
+    <script>
+        // Pie Chart for Age Distribution
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['< 40', '40-60', '60-80', '> 80'],
+                datasets: [{
+                    label: 'Age Distribution',
+                    data: [15, 30, 40, 15], // Placeholder data
+                    backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0'],
+                    hoverBackgroundColor: ['#ff6384aa', '#36a2ebaa', '#ffce56aa', '#4bc0c0aa'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+
+        // Radial Chart for Symptom Severity
+        const radialCtx = document.getElementById('radialChart').getContext('2d');
+        const radialChart = new Chart(radialCtx, {
+            type: 'polarArea',
+            data: {
+                labels: ['Tremor', 'Rigidity', 'Slowness', 'Balance Issues'],
+                datasets: [{
+                    label: 'Symptom Severity',
+                    data: [30, 25, 35, 20], // Placeholder data
+                    backgroundColor: ['#ff9f40', '#ff6384', '#36a2eb', '#4bc0c0'],
+                    hoverBackgroundColor: ['#ff9f40aa', '#ff6384aa', '#36a2ebaa', '#4bc0c0aa'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+
+        // Bar Chart for Treatment Effectiveness
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Medication', 'Therapy', 'Exercise', 'Surgery'],
+                datasets: [{
+                    label: 'Effectiveness (%)',
+                    data: [75, 50, 65, 45], // Placeholder data
+                    backgroundColor: ['#36a2eb', '#4bc0c0', '#ffce56', '#ff6384'],
+                    hoverBackgroundColor: ['#36a2ebaa', '#4bc0c0aa', '#ffce56aa', '#ff6384aa'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.dataset.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
