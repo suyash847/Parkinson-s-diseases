@@ -17,7 +17,7 @@ Installation<br>
 Clone the repository:<br>
 bash<br>
 Copy code<br>
-git clone https://github.com/your-username/Early-Parkinson-Detection.git  <br>
+git clone https://github.com/suyash847/Early-Parkinson-Detection.git  <br>
 cd Early-Parkinson-Detection  <br>
 Install dependencies:<br>
 bash<br>
